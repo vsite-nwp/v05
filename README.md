@@ -13,3 +13,5 @@ Uputstva:
 * za crtanje razlomljene linije koristite [MoveToEx](https://msdn.microsoft.com/en-us/library/dd145069%28v=vs.85%29.aspx) (jednom) i [LineTo](https://msdn.microsoft.com/en-us/library/dd145029%28v=vs.85%29.aspx)
 * na pritisnutu tipku Backspace izbacite zadnju točku (i invalidirate prozor) – pop_back
 * na pritisnutu tipku Esc praznite listu (i invalidirate prozor)
+
+![drawing](/screenshot.jpg?raw=true)
