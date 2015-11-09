@@ -1,22 +1,55 @@
 #include <windows.h>
 #include <tchar.h>
 #include "nwpwin.h"
+#include <iostream>
+#include <list>
+
+class SelObj {
+	HDC hdc;
+	HGDIOBJ hOld;
+public:
+	SelObj(HDC hdc, HGDIOBJ hObj) : hdc(hdc), hOld(::SelectObject(hdc, hObj)) { }
+	~SelObj() { ::SelectObject(hdc, hOld); }
+};
+
 
 class MainWindow : public Window
 {
+public:
+	std::list<POINT> points;
 protected:
 	void OnPaint(HDC hdc)  
 	{ 
+		if(points.size()) MoveToEx(hdc, points.front().x, points.front().y, NULL);
+		for (std::list<POINT>::iterator it = points.begin(); it != points.end(); it++)
+		{
+			LineTo(hdc, it->x, it-> y);
+		}
+			
 	// TODO: iterate over points in container and draw polyline
+
 	}
 	void OnLButtonDown(POINT p) 
 	{
-	// TODO: add point to container
+		points.push_back(p);		
+		InvalidateRect(*this, NULL, TRUE);
 	}
 	void OnKeyDown(int vk) 
 	{
-	// TODO: Esc - empty container
-	// TODO: Backspace - remove last point
+		if (vk == VK_ESCAPE)
+		{
+			points.clear();
+			InvalidateRect(*this, NULL, TRUE);
+		}
+		if (vk == VK_BACK)
+		{
+			points.pop_back();
+			InvalidateRect(*this, NULL, TRUE);
+		}
+		if (vk == VK_SPACE)
+		{
+
+		}
 	}
 	void OnDestroy()
 	{
