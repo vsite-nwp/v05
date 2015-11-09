@@ -15,7 +15,7 @@ protected:
 	}
 	void OnKeyDown(int vk) 
 	{
-	// TODO: Esc - empty container
+	// TODO: Esc - empty container, sdasd
 	// TODO: Backspace - remove last point
 	}
 	void OnDestroy()
