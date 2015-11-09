@@ -8,13 +8,26 @@ class MainWindow : public Window
 protected:
 	void OnPaint(HDC hdc)  
 	{ 
-	// TODO: iterate over points in container and draw polyline
-	
+	//iterate over points in container and draw polyline
+		for (iter = list.begin(); iter != list.end(); iter++){
+			if (iter == list.begin()){
+				MoveToEx(hdc, iter->x, iter->y, 0);
+			}
+			else{
+				LineTo(hdc, iter->x, iter->y);
+			}
+
+		}
 	}
 	void OnLButtonDown(POINT p) 
 	{
 	//add point to container
 		list.push_back(p);
+		
+		//RECT rc;
+		InvalidateRect(*this, 0, TRUE);
+
+
 	}
 	void OnKeyDown(int vk) 
 	{
@@ -37,6 +50,7 @@ protected:
 	}
 private:
 	std::list<POINT> list;
+	std::list<POINT>::iterator iter;
 	POINT cords;
 };
 
