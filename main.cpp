@@ -9,14 +9,13 @@ protected:
 	void OnPaint(HDC hdc)  
 	{ 
 	//iterate over points in container and draw polyline
-		for (iter = list.begin(); iter != list.end(); iter++){
+		for (std::list<POINT>::iterator iter = list.begin(); iter != list.end(); iter++){
 			if (iter == list.begin()){
 				MoveToEx(hdc, iter->x, iter->y, 0);
 			}
 			else{
 				LineTo(hdc, iter->x, iter->y);
 			}
-
 		}
 	}
 	void OnLButtonDown(POINT p) 
@@ -26,8 +25,6 @@ protected:
 		
 		//RECT rc;
 		InvalidateRect(*this, 0, TRUE);
-
-
 	}
 	void OnKeyDown(int vk) 
 	{
@@ -50,8 +47,6 @@ protected:
 	}
 private:
 	std::list<POINT> list;
-	std::list<POINT>::iterator iter;
-	POINT cords;
 };
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
