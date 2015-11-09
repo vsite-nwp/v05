@@ -4,13 +4,6 @@
 #include <iostream>
 #include <list>
 
-class SelObj {
-	HDC hdc;
-	HGDIOBJ hOld;
-public:
-	SelObj(HDC hdc, HGDIOBJ hObj) : hdc(hdc), hOld(::SelectObject(hdc, hObj)) { }
-	~SelObj() { ::SelectObject(hdc, hOld); }
-};
 
 
 class MainWindow : public Window
