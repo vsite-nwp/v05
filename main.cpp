@@ -11,40 +11,39 @@ protected:
 	void OnPaint(HDC hdc)  
 	{ 
 	//  iterate over points in container and draw polyline
-		if (!points.empty())
+		if (points.empty()) return;
+
+		MoveToEx(hdc, points.front().x, points.front().y, NULL);
+		for (std::list<POINT>::iterator it = points.begin(); it != points.end(); ++it)
 		{
-			MoveToEx(hdc, points.front().x, points.front().y, NULL);
-			for (std::list<POINT>::iterator it = points.begin(); it != points.end(); ++it)
-			{
-				LineTo(hdc, it->x, it->y);
-			}
-		}
+			LineTo(hdc, it->x, it->y);
+		}	
 	}
+
 	void OnLButtonDown(POINT p) 
 	{
 	//  add point to container
 		points.push_back(p);
 		InvalidateRect(*this, NULL, TRUE);
 	}
+
 	void OnKeyDown(int vk) 
 	{
-		if (!points.empty())
+		if (points.empty()) return;
+		switch (vk)
 		{
-			switch (vk)
-			{
-			case VK_ESCAPE:	//  Esc - empty container
-				points.clear();
-				InvalidateRect(*this, NULL, TRUE);
-				break;
-			case VK_BACK:	//  Backspace - remove last point
-				points.pop_back();
-				InvalidateRect(*this, NULL, TRUE);
-				break;
-			default:
-				break;
-			}
+		case VK_ESCAPE:	//  Esc - empty container
+			points.clear();
+			break;
+		case VK_BACK:	//  Backspace - remove last point
+			points.pop_back();
+			break;
+		default:
+			break;
 		}
+		InvalidateRect(*this, NULL, TRUE);
 	}
+
 	void OnDestroy()
 	{
 		::PostQuitMessage(0);
