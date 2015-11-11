@@ -9,9 +9,15 @@ protected:
 	void OnPaint(HDC hdc)  
 	{ 
 	//iterate over points in container and draw polyline
+		
 		for (std::list<POINT>::iterator iter = list.begin(); iter != list.end(); iter++){
-			if (iter == list.begin()){
-				MoveToEx(hdc, iter->x, iter->y, 0);
+			if (iter->x == jump.x && iter->y == jump.y){
+				iter++;
+				if(iter != list.end())
+					MoveToEx(hdc, iter->x, iter->y, nullptr);
+			}
+			else if (iter == list.begin()){
+				MoveToEx(hdc, iter->x, iter->y, nullptr);	//nullptr ili 0
 			}
 			else{
 				LineTo(hdc, iter->x, iter->y);
@@ -22,19 +28,26 @@ protected:
 	{
 	//add point to container
 		list.push_back(p);
-		
-		//RECT rc;
+
 		InvalidateRect(*this, 0, TRUE);
 	}
 	void OnKeyDown(int vk) 
 	{
-	
 		switch (vk){
 		case VK_ESCAPE:		//Esc - empty container
 			list.clear();
+			InvalidateRect(*this, 0, TRUE);
 			break;
 		case VK_BACK:		//Backspace - remove last point
+			if (list.empty()) return;
+
 			list.pop_back();
+			InvalidateRect(*this, 0, TRUE);
+			break;
+		case VK_SPACE:
+			jump.x = -1;
+			jump.y = -1;
+			list.push_back(jump);
 			break;
 		default:
 			return;
@@ -47,6 +60,7 @@ protected:
 	}
 private:
 	std::list<POINT> list;
+	POINT jump;
 };
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
