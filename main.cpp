@@ -13,7 +13,7 @@ protected:
 		for (std::list<POINT>::iterator iter = list.begin(); iter != list.end(); iter++){
 			if (iter->x == jump.x && iter->y == jump.y){
 				iter++;
-				if(iter != list.end())
+				if (iter == list.end()) break;
 					MoveToEx(hdc, iter->x, iter->y, nullptr);
 			}
 			else if (iter == list.begin()){
