@@ -39,7 +39,7 @@ protected:
 			points.pop_back();
 			break;
 		default:
-			break;
+			return;
 		}
 		InvalidateRect(*this, NULL, TRUE);
 	}
