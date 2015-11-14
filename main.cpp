@@ -22,12 +22,29 @@ protected:
 	}
 	void OnLButtonDown(POINT p) 
 	{
-	// TODO: add point to container
+	// add point to container
+		points.push_back(p);
+		InvalidateRect(*this, 0, true);
 	}
 	void OnKeyDown(int vk) 
 	{
-	// TODO: Esc - empty container
-	// TODO: Backspace - remove last point
+	//  Esc - empty container
+	//  Backspace - remove last point
+
+		if (vk == VK_ESCAPE)
+		{
+			for (iterator iter = points.end(); iter != points.begin();++iter)
+				points.pop_back();
+			InvalidateRect(*this, 0, true);
+		}
+
+	
+		if (vk == VK_BACK) 
+		{
+			if(points.size())
+			points.pop_back();
+			InvalidateRect(*this, 0, true);
+		}
 	}
 	void OnDestroy()
 	{
