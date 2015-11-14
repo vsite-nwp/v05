@@ -4,6 +4,7 @@
 #include<list>
 typedef std::list<POINT>list;
 typedef list::const_iterator iterator;
+typedef list::reverse_iterator riterator;
 class MainWindow : public Window
 {
 	list points;
@@ -33,18 +34,17 @@ protected:
 
 		if (vk == VK_ESCAPE)
 		{
-			for (iterator iter = points.end(); iter != points.begin();++iter)
-				points.pop_back();
+			
+			points.clear();
 			InvalidateRect(*this, 0, true);
 		}
-
-	
-		if (vk == VK_BACK) 
+		else if (vk == VK_BACK) 
 		{
 			if(points.size())
 			points.pop_back();
 			InvalidateRect(*this, 0, true);
 		}
+		else return;
 	}
 	void OnDestroy()
 	{
