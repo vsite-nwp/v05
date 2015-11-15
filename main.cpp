@@ -1,23 +1,44 @@
 #include <windows.h>
 #include <tchar.h>
 #include "nwpwin.h"
+#include<list>
 
 class MainWindow : public Window
 {
 protected:
-	void OnPaint(HDC hdc)  
-	{ 
-	// TODO: iterate over points in container and draw polyline
+	std::list<POINT> lists;
+	std::list<POINT>::iterator it;
+	void OnPaint(HDC hdc)  {
+		
+		if (lists.size() != 0) {
+			MoveToEx(hdc, lists.front().x, lists.front().y, NULL);
+		}
+		for (it = lists.begin(); it != lists.end(); ++it) {
+				LineTo(hdc, it->x, it->y);
+			}
 	}
-	void OnLButtonDown(POINT p) 
-	{
-	// TODO: add point to container
+	void OnLButtonDown(POINT p) {
+		
+		lists.push_back(p);
+		InvalidateRect(*this, NULL, true);
+	
 	}
-	void OnKeyDown(int vk) 
-	{
-	// TODO: Esc - empty container
-	// TODO: Backspace - remove last point
+	void OnKeyDown(int vk) {
+		
+		switch (vk) {
+			case VK_ESCAPE:
+				lists.clear();
+				break;
+			case VK_BACK:
+				if (lists.size() == 0)
+				return;
+				lists.pop_back();
+				break;
+		default:
+			return;
 	}
+		InvalidateRect(*this, NULL, true);
+}
 	void OnDestroy()
 	{
 		::PostQuitMessage(0);
