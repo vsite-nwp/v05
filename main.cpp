@@ -32,7 +32,7 @@ protected:
 	//  Esc - empty container
 	//  Backspace - remove last point
 
-		if (vk == VK_CONTROL)
+		if (vk == VK_ESCAPE)
 		{
 			
 			while (points.size())
