@@ -31,12 +31,14 @@ protected:
 			lists.clear();
 			break;
 		case VK_BACK:
+			if (lists.size() == 0)
+				return;
 			lists.pop_back();
 			break;
 		default:
 			return;
 		}
-		
+		InvalidateRect(*this, NULL, true);
 		
 	// TODO: Esc - empty container
 	// TODO: Backspace - remove last point
