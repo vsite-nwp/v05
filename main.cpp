@@ -10,12 +10,18 @@ protected:
 	std::list<POINT>::iterator it;
 	void OnPaint(HDC hdc)  
 	{
-	
+		if (lists.size() != 0) {
+			MoveToEx(hdc, lists.front().x, lists.front().y, NULL);
+		}
+		for (it = lists.begin(); it != lists.end(); ++it) {
+				LineTo(hdc, it->x, it->y);
+			}
 	// TODO: iterate over points in container and draw polyline
 	}
 	void OnLButtonDown(POINT p) 
 	{
 		lists.push_back(p);
+		InvalidateRect(*this, NULL, true);
 	// TODO: add point to container
 	}
 	void OnKeyDown(int vk) 
@@ -30,6 +36,7 @@ protected:
 		default:
 			return;
 		}
+		
 		
 	// TODO: Esc - empty container
 	// TODO: Backspace - remove last point
