@@ -35,7 +35,11 @@ protected:
 		switch (vk){
 		case VK_ESCAPE: lista.clear(); InvalidateRect(*this, 0, TRUE);
 			break;
-		case VK_BACK: lista.pop_back(); InvalidateRect(*this, 0, TRUE);
+		case VK_BACK:
+			if (lista.empty()){
+				break;
+			}
+			lista.pop_back(); InvalidateRect(*this, 0, TRUE);
 			break;
 		}
 	}
