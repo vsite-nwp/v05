@@ -1,13 +1,20 @@
 #include <windows.h>
 #include <tchar.h>
 #include "nwpwin.h"
+#include <list>
 
 class MainWindow : public Window
 {
+	std::list<POINT> lista;
+	std::list<POINT>::iterator it;
 protected:
 	void OnPaint(HDC hdc)  
 	{ 
-	// TODO: iterate over points in container and draw polyline
+		if (lista.size())
+			MoveToEx(hdc, lista.front().x, lista.front().y, NULL);
+		for (it = lista.begin(); it != lista.end(); it++){
+			LineTo(hdc, it->x, it->y);
+		}
 	}
 	void OnLButtonDown(POINT p) 
 	{
