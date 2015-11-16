@@ -21,10 +21,20 @@ protected:
 		lista.push_back(p);
 		InvalidateRect(*this, NULL, TRUE);
 	}
-	void OnKeyDown(int vk) 
-	{
-	// TODO: Esc - empty container, sdasd
-	// TODO: Backspace - remove last point
+	void OnKeyDown(int vk){
+		if (lista.size()){
+			switch (vk){
+			case VK_ESCAPE:
+				lista.clear();
+				break;
+			case VK_BACK:
+				lista.pop_back();
+				break;
+			default:
+				return;
+			}
+			InvalidateRect(*this, NULL, TRUE);
+		}
 	}
 	void OnDestroy()
 	{
