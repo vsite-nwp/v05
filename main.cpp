@@ -29,19 +29,18 @@ protected:
 	}
 	void OnKeyDown(int vk) 
 	{
-		if (vk == VK_ESCAPE)
+		if (!points.empty() && (vk == VK_ESCAPE || vk == VK_BACK))
 		{
-			points.clear();
+			switch (vk)
+			{
+			case VK_ESCAPE:
+				points.clear();
+				break;
+			case VK_BACK:
+				points.pop_back();
+				break;
+			}			
 			InvalidateRect(*this, NULL, TRUE);
-		}
-		if (vk == VK_BACK)
-		{
-			points.pop_back();
-			InvalidateRect(*this, NULL, TRUE);
-		}
-		if (vk == VK_SPACE)
-		{
-
 		}
 	}
 	void OnDestroy()
