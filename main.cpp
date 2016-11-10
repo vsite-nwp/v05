@@ -8,8 +8,7 @@ class MainWindow : public Window
 protected:
 	void OnPaint(HDC hdc)  
 	{
-		std::list<POINT>::iterator iter = buffer.begin();
-		for (iter; iter != buffer.end(); iter++)
+		for (auto iter = buffer.begin(); iter != buffer.end(); iter++)
 		{
 			if (iter == buffer.begin())
 				MoveToEx(hdc,iter->x,iter->y,nullptr);
@@ -25,13 +24,18 @@ protected:
 	}
 	void OnKeyDown(int vk) 
 	{
+		
 		if (vk == VK_ESCAPE) {
 			buffer.clear();
 			draw();
 		}
 		if (vk == VK_BACK) {
-			buffer.pop_back();
-			draw();
+			auto iter = buffer.begin();
+			if (iter != buffer.end())
+			{
+				buffer.pop_back();
+				draw();
+			}
 		}
 	}
 	void OnDestroy()
