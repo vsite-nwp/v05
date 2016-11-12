@@ -7,7 +7,6 @@ class MainWindow : public Window
 {
 private:
 	std::vector<POINT> polyline;
-	POINT p;
 	void draw() { InvalidateRect(*this, nullptr, TRUE); }
 protected:
 	void OnPaint(HDC hdc)
@@ -17,8 +16,9 @@ protected:
 		if (polyline.size())
 			MoveToEx(hdc, it->x, it->y, NULL);
 
-		for (; it < polyline.end(); it++) {
+		while(it < polyline.end()){
 			LineTo(hdc, it->x, it->y);
+			++it;
 		}
 
 	}
@@ -32,13 +32,15 @@ protected:
 		switch (vk) {
 		case VK_ESCAPE:
 			polyline.clear();
+			draw();
 			break;
 		case VK_BACK:
 			if (polyline.empty()) return;
 			polyline.pop_back();
+			draw();
 			break;
 		}
-		draw();
+		
 		return;
 	}
 	void OnDestroy()
