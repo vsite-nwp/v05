@@ -16,7 +16,7 @@ protected:
 		if (polyline.size())
 			MoveToEx(hdc, it->x, it->y, NULL);
 
-		while(it < polyline.end()){
+		while(it != polyline.end()){
 			LineTo(hdc, it->x, it->y);
 			++it;
 		}
