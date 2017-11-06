@@ -10,11 +10,15 @@ protected:
 	void OnPaint(HDC hdc)  
 	{ 
 	// TODO: iterate over points in container and draw polyline
-		
+		//MoveToEx(hdc, );
+		for (std::list<POINT>::iterator it = points.begin(); it != points.end(); it++) {
+			LineTo(hdc, it->x, it->y);
+		}
 	}
 	void OnLButtonDown(POINT p) 
 	{
 	// TODO: add point to container
+		InvalidateRect(*this, 0, true);
 		points.push_back(p);
 	}
 	void OnKeyDown(int vk) 
