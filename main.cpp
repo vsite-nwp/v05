@@ -36,9 +36,13 @@ protected:
 			
 			break;
 		case VK_BACK:
+			if(!point.empty()){
 			point.pop_back();
+			}
 			
-			break;
+				break;
+			
+			
 		}
 		InvalidateRect(*this, 0, TRUE);
 	}
