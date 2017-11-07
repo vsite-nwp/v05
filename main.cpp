@@ -33,12 +33,14 @@ protected:
 		{
 		case VK_ESCAPE:
 			point.clear();
+			
 			break;
 		case VK_BACK:
 			point.pop_back();
+			
 			break;
 		}
-	
+		InvalidateRect(*this, 0, TRUE);
 	}
 	void OnDestroy()
 	{
