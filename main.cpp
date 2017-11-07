@@ -10,8 +10,8 @@ class MainWindow : public Window
 protected:
 	void OnPaint(HDC hdc)  
 	{ 
-	// TODO: iterate over points in container and draw polyline
-		if (tocke.size() == 0)
+	// iterate over points in container and draw polyline
+		if (tocke.empty())
 			return;
 
 		POINT begin = tocke.front();
@@ -23,7 +23,7 @@ protected:
 	}
 	void OnLButtonDown(POINT p) 
 	{
-	// TODO: add point to container
+	// add point to container
 		tocke.push_back(p);
 		InvalidateRect(*this, 0, TRUE);
 	}
@@ -35,7 +35,7 @@ protected:
 			tocke.clear();
 			break;
 		case VK_BACK:
-			if(tocke.size()!=0)
+			if(!tocke.empty())
 				tocke.pop_back();
 		default:
 			break;
