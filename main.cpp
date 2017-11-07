@@ -9,8 +9,6 @@ class MainWindow : public Window
 protected:
 	void OnPaint(HDC hdc)  
 	{ 
-	// TODO: iterate over points in container and draw polyline
-		
 		if(points.size())
 			MoveToEx(hdc, points.begin()->x, points.begin()->y, 0);
 		
@@ -20,14 +18,16 @@ protected:
 	}
 	void OnLButtonDown(POINT p) 
 	{
-	// TODO: add point to container
 		InvalidateRect(*this, 0, true);
 		points.push_back(p);
 	}
 	void OnKeyDown(int vk) 
 	{
-	// TODO: Esc - empty container
-	// TODO: Backspace - remove last point
+		switch (vk) {
+		case VK_ESCAPE: points.clear(); break;
+		case VK_BACK:	if (points.size()) { points.pop_back(); } break;
+		}
+		InvalidateRect(*this, 0, true);
 	}
 	void OnDestroy()
 	{
