@@ -10,7 +10,10 @@ protected:
 	void OnPaint(HDC hdc)  
 	{ 
 	// TODO: iterate over points in container and draw polyline
-		//MoveToEx(hdc, );
+		
+		if(points.size())
+			MoveToEx(hdc, points.begin()->x, points.begin()->y, 0);
+		
 		for (std::list<POINT>::iterator it = points.begin(); it != points.end(); it++) {
 			LineTo(hdc, it->x, it->y);
 		}
