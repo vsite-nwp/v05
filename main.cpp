@@ -25,8 +25,10 @@ protected:
 	}
 	void OnKeyDown(int vk) 
 	{
+		if (points.empty()) return;
+
 		if (vk == VK_ESCAPE) points.clear();
-		else if (vk == VK_BACK) points.pop_back();
+		else if (vk == VK_BACK)	points.pop_back();
 		else return;
 
 		InvalidateRect(*this, nullptr, TRUE);
