@@ -26,14 +26,18 @@ protected:
 		switch (vk) {
 		case VK_ESCAPE:
 			points.clear();
+			::InvalidateRect(*this, nullptr, true);
 			break;
 		case VK_BACK:
-			points.pop_back();
+			if (points.empty())
+				return;
+			else
+				points.pop_back();
+			::InvalidateRect(*this, nullptr, true);
 			break;
 		default:
 			return;
 		}
-		::InvalidateRect(*this, nullptr, true);
 
 	}
 	void OnDestroy()
