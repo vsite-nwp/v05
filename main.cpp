@@ -7,7 +7,6 @@
 
 class MainWindow : public Window
 {
-
 	std::list<POINT> points;
 protected:
 	void OnPaint(HDC hdc)  
@@ -29,10 +28,15 @@ protected:
 	{
 		switch (vk) {
 		
-		case VK_ESCAPE: points.clear();
+		case VK_ESCAPE:
+			points.clear();
+			::InvalidateRect(*this, nullptr, true);
 			break;
-		case VK_BACK: points.pop_back();
-			
+		case VK_BACK:
+			if (!points.empty()) {
+				points.pop_back();
+				::InvalidateRect(*this, nullptr, true);
+			}
 			break;
 		default:
 			return;
