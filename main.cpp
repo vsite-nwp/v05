@@ -14,7 +14,7 @@ protected:
 			else 
 			LineTo(hdc, it->x, it->y);
 		}
-		InvalidateRect(*this, NULL, NULL);
+		InvalidateRect(*this, NULL, false);
 	}
 	void OnLButtonDown(POINT p) 
 	{
@@ -26,8 +26,16 @@ protected:
 	{
 	// TODO: Esc - empty container
 		switch (vk) {
-		case VK_ESCAPE: lista.clear(); break;
-		case VK_BACK: lista.pop_back(); break;
+		case VK_ESCAPE: 
+			lista.clear();
+			InvalidateRect(*this, NULL, true); 
+			break;
+		case VK_BACK: 
+			if (!lista.empty()) {
+				lista.pop_back();
+				InvalidateRect(*this, NULL, true);
+				break;
+			}
 		}
 	// TODO: Backspace - remove last point
 	}
