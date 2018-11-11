@@ -30,6 +30,9 @@ protected:
 						
 			break;
 		case VK_BACK: 
+			if (points.empty())
+				return;
+			else
 			points.pop_back();
 			break;
 		default: return;
