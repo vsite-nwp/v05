@@ -27,13 +27,18 @@ protected:
 	{
 		switch (vk) {
 			case VK_ESCAPE:
-				points.clear(); break;
+				points.clear();
+				InvalidateRect(*this, nullptr, TRUE);
+				break;
 			case VK_BACK:
-				points.pop_back(); break;
+				if(!points.empty()) {
+					points.pop_back();
+					InvalidateRect(*this, nullptr, TRUE);
+				}
+				break;
 			default:
 				break;
 		}
-		InvalidateRect(*this, nullptr, TRUE);
 	}
 	void OnDestroy()
 	{
