@@ -24,14 +24,17 @@ protected:
 		switch (vk) {
 		case VK_ESCAPE:
 			points.clear();
+			InvalidateRect(*this, NULL, true);
 			break;
 		case VK_BACK:
-			if (!points.empty()) points.pop_back();
+			if (!points.empty()) {
+				points.pop_back();
+				InvalidateRect(*this, NULL, true);
+			}
 			break;
 		default:
 			break;
 		}
-		InvalidateRect(*this, NULL, true);
 	}
 	void OnDestroy()
 	{
