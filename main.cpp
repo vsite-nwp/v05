@@ -14,17 +14,14 @@ protected:
 			else 
 			LineTo(hdc, it->x, it->y);
 		}
-		InvalidateRect(*this, NULL, false);
 	}
 	void OnLButtonDown(POINT p) 
 	{
-		position = p;
-		lista.push_back(position);
-		UpdateWindow(*this);
+		lista.push_back(p);
+		InvalidateRect(*this, NULL, false);
 	}
 	void OnKeyDown(int vk) 
 	{
-	// TODO: Esc - empty container
 		switch (vk) {
 		case VK_ESCAPE: 
 			lista.clear();
@@ -37,7 +34,6 @@ protected:
 				break;
 			}
 		}
-	// TODO: Backspace - remove last point
 	}
 	void OnDestroy()
 	{
@@ -45,7 +41,6 @@ protected:
 	}
 private:
 	std::list<POINT> lista;
-	POINT position;
 };
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
