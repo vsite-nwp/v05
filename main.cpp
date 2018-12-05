@@ -7,12 +7,13 @@ class MainWindow : public Window
 {
 private:
 	std::list<POINT> list_points;
-	std::list<POINT>::iterator iterator;
 
 protected:
 	void OnPaint(HDC hdc)  
 	{ 
-		if (list_points.size() !=0)
+		std::list<POINT>::iterator iterator;
+
+		if (!list_points.empty())
 		{
 			MoveToEx(hdc, list_points.front().x, list_points.front().y, NULL);
 		}
@@ -32,10 +33,10 @@ protected:
 		switch (vk)
 		{
 		case VK_ESCAPE: list_points.clear(); break;
-		case VK_BACK:if (list_points.size() == 0) return;
+		case VK_BACK:if (list_points.empty()) return;
 			list_points.pop_back(); break;
-		default:
-			break;
+		default: return;
+			
 		}
 		InvalidateRect(*this, NULL, true);
 	}
