@@ -11,35 +11,33 @@ class MainWindow : public Window
 protected:
 	void OnPaint(HDC hdc)  
 	{
-		int i = 0;
 		for (std::list<POINT>::const_iterator it = points.begin(); it != points.end(); ++it) {
-			if (i == 0) {
+			if (it == points.begin()) {
 				MoveToEx(hdc, it->x, it->y, nullptr);
 			}
 			else {
 				LineTo(hdc, it->x, it->y);
 			}
-			++i;
 		}
 	}
 	void OnLButtonDown(POINT p) 
 	{
 		points.push_back(p);
-		InvalidateRect(nullptr, nullptr, true);
+		InvalidateRect(*this, nullptr, true);
 	}
 	void OnKeyDown(int vk) 
 	{
 		switch (vk) {
 		case VK_ESCAPE:
 			points.clear();
-			InvalidateRect(nullptr, nullptr, true);
+			InvalidateRect(*this, nullptr, true);
 			break;
 		case VK_BACK:
 			if (!points.empty())
 			{
 				points.pop_back();
 			}
-			InvalidateRect(nullptr, nullptr, true);
+			InvalidateRect(*this, nullptr, true);
 			break;
 		}
 
