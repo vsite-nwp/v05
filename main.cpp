@@ -1,27 +1,67 @@
-#include <windows.h>
+#include <windows.h>i
 #include <tchar.h>
+#include <list>
+#include <algorithm>
 #include "nwpwin.h"
 
 class MainWindow : public Window
 {
 protected:
+	void Reset()
+	{
+		if (mCoords.size() > 0)
+		{
+			mCoords.clear();
+			InvalidateRect(*this, nullptr, true);
+		}
+	}
+	void PopBack()
+	{
+		if (!mCoords.empty())
+		{
+			mCoords.pop_back();
+			InvalidateRect(*this, nullptr, true);
+		}
+	}
 	void OnPaint(HDC hdc)  
 	{ 
-	// TODO: iterate over points in container and draw polyline
+		if (mCoords.size())
+		{
+			auto i = mCoords.begin();
+			MoveToEx(hdc, i->x, i->y, nullptr);
+			std::for_each(std::begin(mCoords), std::end(mCoords), [&hdc](POINT& p)->void { ::LineTo(hdc, p.x, p.y); });
+		}
 	}
 	void OnLButtonDown(POINT p) 
 	{
-	// TODO: add point to container
+		mCoords.push_back(p);
+		InvalidateRect(*this, nullptr, true);
 	}
+
 	void OnKeyDown(int vk) 
 	{
-	// TODO: Esc - empty container
-	// TODO: Backspace - remove last point
+		switch (vk)
+		{
+			case VK_ESCAPE:
+			{
+				Reset();
+				break;
+			}
+			case VK_BACK:
+			{
+				PopBack();
+				break;
+			}
+			default:
+				break;	
+		}
 	}
 	void OnDestroy()
 	{
 		::PostQuitMessage(0);
 	}
+private:
+	std::list<POINT> mCoords;
 };
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
