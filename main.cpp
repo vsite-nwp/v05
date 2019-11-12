@@ -17,7 +17,6 @@ class MainWindow : public Window
 protected:
 	void OnPaint(HDC hdc)  
 	{ 
-		LineTo(hdc, 100, 100);
 		if (!points.empty()) 
 		{			
 			SelObj pen(hdc, GetStockObject(DC_PEN));
@@ -29,8 +28,7 @@ protected:
 				LineTo(hdc, px.x, px.y);
 			}
 		}
-		MoveToEx(hdc, 100, 100, 0);
-		LineTo(hdc, 0, 200);
+		
 	}
 	void OnLButtonDown(POINT p) 
 	{
@@ -59,7 +57,7 @@ protected:
 	}
 	void OnDestroy()
 	{
-		::PostQuitMessage(0);
+		return;
 	}
 };
 
