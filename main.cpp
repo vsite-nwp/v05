@@ -10,7 +10,12 @@ class MainWindow : public Window
 protected:
 	void OnPaint(HDC hdc)  
 	{ 
-	// TODO: iterate over points in container and draw polyline
+		for (auto iter = list.begin(); iter != list.end(); ++iter) {
+			if (iter == list.begin())
+				MoveToEx(hdc, list.front().x, list.front().y, NULL);
+			else
+				LineTo(hdc, iter->x, iter->y);
+		}
 	}
 	void OnLButtonDown(POINT p) 
 	{
