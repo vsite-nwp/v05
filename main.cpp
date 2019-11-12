@@ -1,9 +1,12 @@
 #include <windows.h>
+#include <stdlib.h>
 #include <tchar.h>
 #include "nwpwin.h"
+#include <list>
 
 class MainWindow : public Window
 {
+	std::list<POINT> list;
 protected:
 	void OnPaint(HDC hdc)  
 	{ 
@@ -11,7 +14,8 @@ protected:
 	}
 	void OnLButtonDown(POINT p) 
 	{
-	// TODO: add point to container
+		list.push_back(p);
+		InvalidateRect(*this, NULL, true);
 	}
 	void OnKeyDown(int vk) 
 	{
