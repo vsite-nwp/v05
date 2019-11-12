@@ -7,6 +7,8 @@
 class MainWindow : public Window
 {
 	std::list<POINT> list;
+public:
+	void Move() { InvalidateRect(*this, NULL, true); }
 protected:
 	void OnPaint(HDC hdc)  
 	{ 
@@ -20,12 +22,24 @@ protected:
 	void OnLButtonDown(POINT p) 
 	{
 		list.push_back(p);
-		InvalidateRect(*this, NULL, true);
+		Move();
 	}
 	void OnKeyDown(int vk) 
 	{
-	// TODO: Esc - empty container
-	// TODO: Backspace - remove last point
+		switch (vk)
+		{
+		case VK_BACK:
+			list.pop_back();
+			Move();
+			break;
+		case VK_ESCAPE:
+			list.clear();
+			Move();
+			break;
+		default:
+			break;
+		}
+
 	}
 	void OnDestroy()
 	{
