@@ -52,12 +52,12 @@ protected:
 			}
 			break;
 		default:
-			InvalidateRect(*this, NULL, true);
+			return;
 		}
 	}
 	void OnDestroy()
 	{
-		return;
+		::PostQuitMessage(0);
 	}
 };
 
