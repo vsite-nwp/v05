@@ -23,7 +23,7 @@ protected:
 	void OnPaint(HDC hd)
 	{
 		if (!pnt.empty()) {
-			Obj pen(hd, GetStockObject(DC_PEN));
+			
 			SetDCPenColor(hd, RGB(255, 0, 0));
 			MoveToEx(hd, pnt.front().x, pnt.front().y, 0);
 		}
@@ -43,7 +43,7 @@ protected:
 		{
 			if (!pnt.empty())
 				pnt.pop_back();
-			InvalidateRect(*this, NULL, true);
+			
 		}
 
 		else	if (vk == VK_ESCAPE)
@@ -51,21 +51,21 @@ protected:
 			if (!pnt.empty())
 			{
 				pnt.clear();
-				InvalidateRect(*this, NULL, true);
+				
 			}
 		}
 		else
 		{
-			InvalidateRect(*this, NULL, true);
+			
 			return;
 		}
-
+		InvalidateRect(*this, NULL, true);
 	};
 
 
 	void OnDestroy()
 	{
-		return;
+		
 		::PostQuitMessage(0);
 	}
 };
