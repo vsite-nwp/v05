@@ -2,60 +2,48 @@
 #include <tchar.h>
 #include "nwpwin.h"
 #include <list>
-class Obj {
-	HDC handleDc;
-	HGDIOBJ hGetObj;
-public:
-	Obj(HDC hd, HGDIOBJ hGo) {
-		handleDc = hd;
-		hGetObj = hGo;
-	}
-	~Obj() {
-		SelectObject(handleDc, hGetObj);
-	}
-};
+
 class MainWindow : public Window
 {
-	std::list<POINT> pnt;
+	std::list<POINT> point;
 protected:
 	void OnPaint(HDC hdc)
 	{
-		if (!pnt.empty()) {
+		if (point.empty())
 
-			SetDCPenColor(hdc, RGB(255, 0, 0));
-			MoveToEx(hdc, pnt.front().x, pnt.front().y, 0);
-		}
-		for (auto it = pnt.begin(); it != pnt.end(); ++it)
+			return;
+		else
+
+		MoveToEx(hdc, point.front().x, point.front().y, 0);
+		for (auto it = point.begin(); it != point.end(); ++it)
 		{
 			LineTo(hdc, (int)it->x, (int)it->y);
 		}
 	}
+	
+
 	void OnLButtonDown(POINT p) 
 	{
-		pnt.push_back(p);
+		point.push_back(p);
 		InvalidateRect(*this, NULL, true);
 	}
-	void OnKeyDown(int vk) 
+	void OnKeyDown(int vk)
 	{
-		if (vk == VK_BACK)
-		{
-			if (!pnt.empty())
-				pnt.pop_back();
-		}
+		switch (vk) {
+		case VK_BACK:
 
-		else if (vk == VK_ESCAPE)
-		{
-			if (!pnt.empty())
-				pnt.clear();
-		}
-		else
-		{
+			point.pop_back();
+			InvalidateRect(*this, nullptr, true);
+			break;
+		case VK_ESCAPE:
+
+			point.clear();
+			InvalidateRect(*this, nullptr, true);
+			break;
+		default:
 			return;
 		}
-
-		InvalidateRect(*this, NULL, true);
 	}
-
 	void OnDestroy()
 	{
 		::PostQuitMessage(0);
