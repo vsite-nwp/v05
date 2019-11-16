@@ -23,8 +23,20 @@ protected:
 	}
 	void OnKeyDown(int vk)
 	{
-		// TODO: Esc - empty container
-		// TODO: Backspace - remove last point
+		switch (vk)
+		{
+		case VK_ESCAPE:
+			points.clear();
+			InvalidateRect(*this, nullptr, true);
+			break;
+		case VK_BACK:
+			if (!points.empty())
+				points.pop_back();
+			InvalidateRect(*this, nullptr, true);
+			break;
+		default:
+			break;
+		}
 	}
 	void OnDestroy()
 	{
