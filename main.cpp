@@ -18,7 +18,8 @@ protected:
 	}
 	void OnLButtonDown(POINT p)
 	{
-		// TODO: add point to container
+		points.push_back(p);
+		InvalidateRect(*this, nullptr, true);
 	}
 	void OnKeyDown(int vk)
 	{
