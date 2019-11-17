@@ -29,16 +29,19 @@ protected:
 			RECT rc = { min(it->x,p.x)-AREA, min(it->y, p.y)-AREA, max(it->x,p.x)+AREA, max(it->y, p.y)+AREA };
 			InvalidateRect(*this, &rc, TRUE);
 		}
-		else 
-		{
-			InvalidateRect(*this, nullptr, TRUE);
-		}
-		
 	}
+
 	void OnKeyDown(int vk) 
 	{
-	// TODO: Esc - empty container
-	// TODO: Backspace - remove last point
+		if (points.empty())
+			return;
+		if (vk == VK_ESCAPE)
+			points.clear();
+		else if (vk == VK_BACK)
+			points.pop_back();
+		else
+			return;
+		InvalidateRect(*this, nullptr, TRUE);
 	}
 	void OnDestroy()
 	{
