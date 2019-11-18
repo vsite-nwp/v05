@@ -2,35 +2,30 @@
 #include <tchar.h>
 #include "nwpwin.h"
 #include <list>
+
 class MainWindow : public Window{
-	std::list<POINT> points;
+	std::list<POINT> p;
 protected:
 	void OnPaint(HDC hdc){ 
-		if (!points.empty())
-			MoveToEx(hdc, points.front().x, points.front().y, NULL);
-		for (POINT pt : points)
+		if (p.empty()==false)
+			MoveToEx(hdc, p.front().x, p.front().y, NULL);
+		for (POINT pt : p)
 			::LineTo(hdc, pt.x, pt.y);
 	}
-	void OnLButtonDown(POINT p){
-		points.push_back(p);
+	void OnLButtonDown(POINT po){
+		p.push_back(po);
 		InvalidateRect(*this, 0, true);
 	}
 	void OnKeyDown(int vk){
-		switch (vk) {
-		case VK_ESCAPE: {
-			points.clear();
+		if (vk == VK_ESCAPE) {
+			p.clear();
 			InvalidateRect(*this, 0, true);
-			break;
 		}
-		case VK_BACK: {
-			if (!points.empty()) {
-				points.pop_back();
+		else if (vk == VK_BACK) {
+			if (p.empty() == false) {
+				p.pop_back();
 				InvalidateRect(*this, 0, true);
-				break;
 			}
-		}
-		default:
-			break;
 		}
 	}
 	void OnDestroy()
@@ -43,6 +38,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {
 	Application app;
 	MainWindow wnd;
-	wnd.Create(NULL, WS_OVERLAPPEDWINDOW | WS_VISIBLE, _T("NWP 5"));
+	wnd.Create(NULL, WS_OVERLAPPEDWINDOW | WS_VISIBLE, _T("Vj5"));
 	return app.Run();
 }
