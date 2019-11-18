@@ -16,21 +16,19 @@ protected:
 	}
 
 	void OnPaint(HDC hdc)  
-	{ 
-	
-		for (auto point = allPointList.begin(); point != allPointList.end(); ++point)
-		{
-			if(point == allPointList.begin())
-				MoveToEx(hdc, point->x, point->y, NULL);
-
-			LineTo(hdc, point->x, point->y);
-		}
+	{ 			
+			for (auto point = allPointList.begin(); point != allPointList.end(); ++point)
+			{
+				if (point == allPointList.begin())					
+					MoveToEx(hdc, point->x, point->y, NULL);
+									
+				LineTo(hdc, point->x, point->y);
+			}		
 	}
 	void OnLButtonDown(POINT p) 
 	{
 		allPointList.push_back(p);
-		MovePoints();
-		
+		MovePoints();		
 	}
 	void OnKeyDown(int vk) 
 	{
@@ -43,8 +41,10 @@ protected:
 				break;
 			}
 			case VK_BACK:
-			{
-				allPointList.pop_back();
+			{				
+				if (!allPointList.empty())				
+					allPointList.pop_back();					
+				
 				MovePoints();
 				break;
 			}
@@ -65,3 +65,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 	wnd.Create(NULL, WS_OVERLAPPEDWINDOW | WS_VISIBLE, _T("NWP 5"));
 	return app.Run();
 }
+
+
+
