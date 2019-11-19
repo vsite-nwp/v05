@@ -16,7 +16,7 @@ protected:
 
 			for (auto it = points.begin(); it != points.end(); ++it)
 			{
-				LineTo(hdc, (int)it->x, (int)it->y);
+				LineTo(hdc, it->x, it->y);
 			}
 		}
 	}
@@ -33,8 +33,10 @@ protected:
 			InvalidateRect(*this, NULL, true);
 			break;
 		case VK_BACK:
-			points.pop_back();
-			InvalidateRect(*this, NULL, true);
+			if (!points.empty()) {
+				points.pop_back();
+				InvalidateRect(*this, NULL, true);
+			}
 			break;
 		default:
 			return;
