@@ -1,27 +1,61 @@
 #include <windows.h>
+#include <list>
 #include <tchar.h>
 #include "nwpwin.h"
+
+// NoteToSelf: get HDC from main window?
 
 class MainWindow : public Window
 {
 protected:
 	void OnPaint(HDC hdc)  
 	{ 
-	// TODO: iterate over points in container and draw polyline
+
+		DrawPolygon(hdc);
+
 	}
 	void OnLButtonDown(POINT p) 
 	{
-	// TODO: add point to container
+
+		coords.push_back(p);
+		InvalidateRect(*this, nullptr, true);
+
 	}
 	void OnKeyDown(int vk) 
 	{
-	// TODO: Esc - empty container
-	// TODO: Backspace - remove last point
+
+		if (vk == VK_ESCAPE)
+			coords.clear();
+
+		if (vk == VK_BACK && !coords.empty())
+			coords.pop_back();
+		InvalidateRect(*this, nullptr, true);
 	}
 	void OnDestroy()
 	{
 		::PostQuitMessage(0);
 	}
+
+	void DrawPolygon(HDC hdc)
+	{
+		if (!coords.empty())
+		{
+
+			MoveToEx(hdc, coords.front().x, coords.front().y, nullptr);
+
+			for each (POINT point in coords)
+			{
+				LineTo(hdc, point.x, point.y);
+			}
+
+		}
+
+	}
+
+private:
+
+	std::list<POINT> coords;
+
 };
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPTSTR, int)

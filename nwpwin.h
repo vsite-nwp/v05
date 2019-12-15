@@ -34,4 +34,5 @@ protected:
 	virtual void OnKeyUp(int key)  { }
 	virtual void OnLButtonDown(POINT p)  { }
 	virtual void OnPaint(HDC dc)  { }
+
 };
