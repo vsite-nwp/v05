@@ -3,8 +3,6 @@
 #include <tchar.h>
 #include "nwpwin.h"
 
-// NoteToSelf: get HDC from main window?
-
 class MainWindow : public Window
 {
 protected:
@@ -25,11 +23,16 @@ protected:
 	{
 
 		if (vk == VK_ESCAPE)
+		{
 			coords.clear();
+			InvalidateRect(*this, nullptr, true);
+		}
 
 		if (vk == VK_BACK && !coords.empty())
+		{
 			coords.pop_back();
-		InvalidateRect(*this, nullptr, true);
+			InvalidateRect(*this, nullptr, true);
+		}
 	}
 	void OnDestroy()
 	{
@@ -43,7 +46,7 @@ protected:
 
 			MoveToEx(hdc, coords.front().x, coords.front().y, nullptr);
 
-			for each (POINT point in coords)
+			for (auto point : coords)
 			{
 				LineTo(hdc, point.x, point.y);
 			}
