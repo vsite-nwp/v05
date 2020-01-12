@@ -9,24 +9,18 @@ class MainWindow : public Window
 protected:
 	void OnPaint(HDC hdc)  
 	{ 
-		//version 1) range for
+		int cntr = 0;
 		for (POINT p : points)
 		{
-			if (p.x==points.front().x && p.y==points.front().y)
+			if (!cntr) {
 				::MoveToEx(hdc, points.front().x, points.front().y, nullptr);
+				++cntr;
+			}
 			else
 			{
 				::LineTo(hdc,p.x,p.y);
 			}
 		}
-		//version 2) iterator
-		/*for (auto it = points.begin(); it != points.end(); ++it)
-			if (it==points.begin())
-				::MoveToEx(hdc, points.front().x, points.front().y, nullptr);
-			else
-			{
-				::LineTo(hdc,it->x,it->y);
-			}*/
 	}
 	void OnLButtonDown(POINT p) 
 	{
@@ -35,11 +29,14 @@ protected:
 	}
 	void OnKeyDown(int vk) 
 	{
-		if (vk == VK_ESCAPE)
-			points.erase(points.begin(),points.end());
-		if (vk == VK_BACK)
+		if (vk == VK_ESCAPE) {
+			points.clear();
+			InvalidateRect(*this, NULL, TRUE);
+		}
+		if (vk == VK_BACK && !points.empty()) {
 			points.pop_back();
-		InvalidateRect(*this,NULL,TRUE);
+			InvalidateRect(*this, NULL, TRUE);
+		}
 	}
 	void OnDestroy()
 	{
