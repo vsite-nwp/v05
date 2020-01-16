@@ -12,6 +12,7 @@ protected:
 		if (points.empty()) {
 			return;
 		}
+		MoveToEx(hdc, points.front().x, points.front().y, nullptr);
 		for (const auto& p : points) {
 			LineTo(hdc, p.x, p.y);
 		}
@@ -26,12 +27,14 @@ protected:
 		switch (vk) {
 		case VK_ESCAPE:
 			points.clear();
+			InvalidateRect(*this, nullptr, true);
 			break;
 		case VK_BACK:
 			if (points.empty())
 				return;
 			else
 				points.pop_back();
+			InvalidateRect(*this, nullptr, true);
 			break;
 		default:
 			return;
