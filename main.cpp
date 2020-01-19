@@ -21,12 +21,24 @@ protected:
 	void OnLButtonDown(POINT p) 
 	{
 		ptslst.push_back(p);
-		InvalidateRect(*this, nullptr, TRUE);
+		::InvalidateRect(*this, nullptr, TRUE);
 	}
 	void OnKeyDown(int vk) 
 	{
-	// TODO: Esc - empty container
-	// TODO: Backspace - remove last point
+		switch (vk) {
+		case VK_ESCAPE:
+			ptslst.clear();
+			::InvalidateRect(*this, nullptr, TRUE);
+			break;
+		case VK_BACK:
+			if (!ptslst.empty()) {
+				ptslst.pop_back();
+				::InvalidateRect(*this, nullptr, TRUE);
+			}
+			break;
+		default:
+			return;
+		}
 	}
 	void OnDestroy()
 	{
