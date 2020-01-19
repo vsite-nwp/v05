@@ -13,14 +13,15 @@ protected:
 	{ 
 		if (ptslst.empty())
 			return;
-		::MoveToEx(hdc, ptslst.front().x, ptslst.front().y, NULL);
+		::MoveToEx(hdc, ptslst.front().x, ptslst.front().y, nullptr);
 		for (const POINT& p : ptslst) {
 			::LineTo(hdc, p.x, p.y);
 		}
 	}
 	void OnLButtonDown(POINT p) 
 	{
-	// TODO: add point to container
+		ptslst.push_back(p);
+		InvalidateRect(*this, nullptr, TRUE);
 	}
 	void OnKeyDown(int vk) 
 	{
