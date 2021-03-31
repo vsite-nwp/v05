@@ -7,6 +7,7 @@ class main_window : public vsite::nwp::window
 private:
 	std::list<POINT> ps;
 protected:
+
 	void on_paint(HDC hdc) override  
 	{ 
 		if (!ps.empty()) //baca error ako se ne provjeri
@@ -19,17 +20,38 @@ protected:
 			::LineTo(hdc, p.x, p.y);
 		}
 	}
+
 	void on_left_button_down(POINT p) override
 	{
 		ps.push_back(p);
 		InvalidateRect(*this, 0, true);
 	}
+
 	void on_key_down(int vk) override
 	{
-	// TODO: Esc - empty container 
-	// TODO: Backspace - remove last point
+		switch (vk)
+		{
+		case VK_ESCAPE:
+			ps.clear();
+			::InvalidateRect(*this, nullptr, true);
+			break;
+		case VK_BACK:
+			if (ps.empty())
+			{
+				return;
+			}
+			else
+			{
+				ps.pop_back();
+				::InvalidateRect(*this, nullptr, true);
+			}
+			break;
+		default:
+			return;
+		}
 	}
-	void on_destroy() override
+
+	void on_destroy() override 
 	{
 		::PostQuitMessage(0);
 	}
