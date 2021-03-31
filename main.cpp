@@ -7,12 +7,10 @@ class main_window : public vsite::nwp::window
 {
 protected:
 	std::list<POINT> listaTocaka;
-	RECT rc;
 	void on_paint(HDC hdc) override  
 	{ 
-		POINT p;
 		if (!listaTocaka.empty()) {
-			MoveToEx(hdc, listaTocaka.begin()->x, listaTocaka.begin()->y, &p);
+			MoveToEx(hdc, listaTocaka.begin()->x, listaTocaka.begin()->y, NULL);
 			for (auto it = listaTocaka.begin(); it != listaTocaka.end(); ++it) {
 				LineTo(hdc, it -> x, it -> y);
 			}
