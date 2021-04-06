@@ -8,38 +8,44 @@ class main_window : public vsite::nwp::window
 protected:
 
 	void on_paint(HDC hdc) override{
-		if (!pontList.empty()) {
-			::MoveToEx(hdc, pontList.front().x, pontList.front().y, 0);
+		if (!pointList.empty()) {
+			::MoveToEx(hdc, pointList.front().x, pointList.front().y, 0);
 		}
 
-		for (POINT points : pontList){
+		for (POINT points : pointList){
 			::LineTo(hdc, points.x, points.y);
 		}
 	}
 
 	void on_left_button_down(POINT points) override	{
-		pontList.push_back(points);
+		pointList.push_back(points);
 		InvalidateRect(*this, 0, true);
 	}
 
 	void on_key_down(int vk) override{
 		switch (vk){
 		case VK_ESCAPE:
-			pontList.clear();
+			pointList.clear();
 			::InvalidateRect(*this, nullptr, true);
 
 
 			break;
 		case VK_BACK:
-				pontList.pop_back();
+			if (pointList.empty()){
+				return;
+			}
+			else {
+				pointList.pop_back();
 				::InvalidateRect(*this, nullptr, true);
+			}
+			
 			break;
 		default:
 			return;
 		}
 	}
 private:
-	std::list<POINT> pontList;
+	std::list<POINT> pointList;
 
 
 	void on_destroy() override	{
