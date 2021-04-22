@@ -11,18 +11,18 @@ protected:
 	{ 
 		if (!pl.empty()) {
 			MoveToEx(hdc, pl.front().x, pl.front().y, 0);
-			for (POINT& p : pl) {
+			for (const POINT& p : pl) {
 				LineTo(hdc, p.x, p.y);
 			}
 		}
-		else
-			return;
 	}
+
 	void on_left_button_down(POINT p) override
 	{
 		pl.push_back(p);
 		InvalidateRect(*this, 0, true);
 	}
+
 	void on_key_down(int vk) override
 	{
 		switch (vk) {
