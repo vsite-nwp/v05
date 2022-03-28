@@ -12,7 +12,7 @@ protected:
 	void on_paint(HDC hdc) override  
 	{ 
 
-	// TODO: iterate over points in container and draw polyline
+
 		if (!cords.empty())
 		{
 			
@@ -23,14 +23,12 @@ protected:
 	}
 	void on_left_button_down(POINT p) override
 	{
-	// TODO: add point to container
+	
 		cords.push_back(p);
 		InvalidateRect(*this, nullptr, true);
 	}
 	void on_key_down(int vk) override
 	{
-		// TODO: Esc - empty container
-		// TODO: Backspace - remove last point
 		switch (vk)
 		{
 		case VK_ESCAPE:
