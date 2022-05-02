@@ -1,8 +1,12 @@
 #include <tchar.h>
 #include "nwpwin.h"
+#include<list>
 
 class main_window : public vsite::nwp::window
 {
+	POINT p;
+	std::list<POINT> list_p;
+
 protected:
 	void on_paint(HDC hdc) override  
 	{ 
@@ -11,11 +15,14 @@ protected:
 	void on_left_button_down(POINT p) override
 	{
 	// TODO: add point to container
+		list_p.push_back(p);
 	}
 	void on_key_down(int vk) override
 	{
 	// TODO: Esc - empty container
+		short esc_press = GetAsyncKeyState(VK_ESCAPE);
 	// TODO: Backspace - remove last point
+		short backs_press = GetAsyncKeyState(VK_BACKS);
 	}
 	void on_destroy() override
 	{
