@@ -11,6 +11,9 @@ protected:
 	void on_paint(HDC hdc) override  
 	{ 
 	// TODO: iterate over points in container and draw polyline
+		for (auto point = list_p.begin(); point != list_p.end(); ++point) {
+
+		}
 	}
 	void on_left_button_down(POINT p) override
 	{
