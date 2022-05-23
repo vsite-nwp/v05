@@ -15,13 +15,13 @@ protected:
 		for (POINT point : l) {
 			::LineTo(hdc, point.x, point.y);
 		}
-	// : iterate over points in container and draw polyline
+	
 	}
 	void on_left_button_down(POINT p) override
 	{
 		l.push_back(p);
 		::InvalidateRect(*this, 0, true);
-	// : add point to container
+	
 	}
 	void on_key_down(int vk) override
 	{
@@ -38,8 +38,7 @@ protected:
 			break;
 
 		}
-	// : Esc - empty container
-	// : Backspace - remove last point
+
 	}
 	void on_destroy() override
 	{
