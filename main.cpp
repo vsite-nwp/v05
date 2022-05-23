@@ -4,7 +4,6 @@
 
 class main_window : public vsite::nwp::window
 {
-	POINT p;
 	std::list<POINT> list_p;
 
 protected:
@@ -26,13 +25,12 @@ protected:
 	}
 	void on_key_down(int vk) override
 	{
-		short esc_press = GetAsyncKeyState(VK_ESCAPE);
-		if (esc_press) {
+		if (vk==VK_ESCAPE) {
 			list_p.clear();
 			InvalidateRect(*this, nullptr, true);
 		}
-		short backspace_press = GetAsyncKeyState(VK_BACK);
-		if (backspace_press) {
+		
+		if (vk==VK_BACK) {
 			if (!list_p.empty())
 				list_p.pop_back();
 			InvalidateRect(*this, nullptr, true);
