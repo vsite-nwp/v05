@@ -13,12 +13,13 @@ protected:
 		for (auto const& x : points) {
 			::LineTo(hdc, x.x, x.y);
 		}
+		::LineTo(hdc, points.front().x, points.front().y);
 	}
 	void on_left_button_down(POINT p) override
 	{
 	// add point to container
 		points.push_back(p);
-		InvalidateRect(*this, NULL, false);
+		InvalidateRect(*this, nullptr, true);
 	}
 	void on_key_down(int vk) override
 	{
