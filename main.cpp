@@ -1,16 +1,27 @@
 #include <tchar.h>
 #include "nwpwin.h"
+#include <list>
 
 class main_window : public vsite::nwp::window
 {
+private:
+	std::list<POINT> points;
 protected:
 	void on_paint(HDC hdc) override  
 	{ 
-	// TODO: iterate over points in container and draw polyline
+	// iterate over points in container and draw polyline
+		if (points.empty()) return;
+		::MoveToEx(hdc, points.front().x, points.front().y, nullptr);
+		for (auto const& x : points) {
+			::LineTo(hdc, x.x, x.y);
+		}
+		::LineTo(hdc, points.front().x, points.front().y);
 	}
 	void on_left_button_down(POINT p) override
 	{
-	// TODO: add point to container
+	// add point to container
+		points.push_back(p);
+		InvalidateRect(*this, nullptr, true);
 	}
 	void on_key_down(int vk) override
 	{
