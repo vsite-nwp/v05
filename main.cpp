@@ -27,12 +27,16 @@ protected:
 	{
 		if (vk == VK_ESCAPE)
 		{
-			points.clear();
-			::InvalidateRect(*this, nullptr, true);
+			if (!points.empty()) {
+				points.clear();
+				::InvalidateRect(*this, nullptr, true);
+			}
 		}
 		if (vk = VK_BACK) {
-			points.pop_back();
-			::InvalidateRect(*this, nullptr, true);
+			if (!points.empty()) {
+				points.pop_back();
+				::InvalidateRect(*this, nullptr, true);
+			}
 		}
 	// TODO: Esc - empty container
 	// TODO: Backspace - remove last point
