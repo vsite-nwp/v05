@@ -32,7 +32,7 @@ protected:
 				::InvalidateRect(*this, nullptr, true);
 			}
 		}
-		if (vk = VK_BACK) {
+		if (vk == VK_BACK) {
 			if (!points.empty()) {
 				points.pop_back();
 				::InvalidateRect(*this, nullptr, true);
