@@ -143,6 +143,7 @@
     <ClCompile Include="nwpwin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Users\Korisnik\Downloads\gdi.h" />
     <ClInclude Include="nwpwin.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
