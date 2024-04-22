@@ -9,7 +9,7 @@ class main_window : public vsite::nwp::window
 protected:
 	void on_paint(HDC hdc) override  
 	{ 
-	// TODO: iterate over points in container and draw polyline
+	// Iterate over points in container and draw polyline
 		if (points.empty()) {
 			return;
 		}
@@ -27,14 +27,14 @@ protected:
 	}
 	void on_left_button_down(POINT p) override
 	{
-	// TODO: add point to container
+	// Add point to container
 		points.push_back(p);
 		::InvalidateRect(*this, 0, 0);
 	}
 	void on_key_down(int vk) override
 	{
-	// TODO: Esc - empty container
-	// TODO: Backspace - remove last point
+	// Esc - empty container
+	// Backspace - remove last point
 		switch (vk) {
 		case VK_ESCAPE:
 			points.clear();
