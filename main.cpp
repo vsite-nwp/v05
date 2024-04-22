@@ -41,6 +41,10 @@ protected:
 			::InvalidateRect(*this, 0, TRUE);
 			break;
 		case VK_BACK:
+			if (!points.empty()) {
+				points.pop_back();
+			}
+			::InvalidateRect(*this, 0, TRUE);
 			break;
 		}
 	}
