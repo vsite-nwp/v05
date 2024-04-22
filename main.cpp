@@ -35,6 +35,14 @@ protected:
 	{
 	// TODO: Esc - empty container
 	// TODO: Backspace - remove last point
+		switch (vk) {
+		case VK_ESCAPE:
+			points.clear();
+			::InvalidateRect(*this, 0, TRUE);
+			break;
+		case VK_BACK:
+			break;
+		}
 	}
 	void on_destroy() override
 	{
