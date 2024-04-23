@@ -14,15 +14,12 @@ protected:
 			return;
 		}
 		
-		POINT firstPoint = points.front();
-		::MoveToEx(hdc, firstPoint.x, firstPoint.y, 0);
+		::MoveToEx(hdc, points.front().x, points.front().y, 0);
 
-		typedef std::list<POINT>::iterator iter;
-		iter it = points.begin();
+		auto it = points.begin();
 
 		for (++it; it != points.end(); ++it) {
-			POINT endPoint = *it;
-			::LineTo(hdc, endPoint.x, endPoint.y);
+			::LineTo(hdc, it->x, it->y);
 		}
 	}
 	void on_left_button_down(POINT p) override
