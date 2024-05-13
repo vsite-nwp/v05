@@ -15,7 +15,8 @@ protected:
 		for (auto const& x : points) {
 			::LineTo(hdc, x.x, x.y);
 		}
-		::LineTo(hdc, points.front().x, points.front().y);
+		// Connect to first point
+		//::LineTo(hdc, points.front().x, points.front().y);
 	}
 	void on_left_button_down(POINT p) override
 	{
@@ -25,8 +26,20 @@ protected:
 	}
 	void on_key_down(int vk) override
 	{
-	// TODO: Esc - empty container
-	// TODO: Backspace - remove last point
+		if (points.empty()) return;
+		switch (vk) {
+		// Esc - empty container
+		case VK_ESCAPE:
+			points.clear();
+			break;
+		// Backspace - remove last point
+		case VK_BACK:
+			points.pop_back();
+			break;
+		default:
+			return;
+		}
+		InvalidateRect(*this, NULL, true);
 	}
 	void on_destroy() override
 	{
